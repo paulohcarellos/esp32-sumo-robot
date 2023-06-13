@@ -16,6 +16,7 @@
 #define pinoMotor1Tras 18 // Pino de acionamento do motor 1
 #define pinoMotor2Frente 5 // Pino de acionamento do motor 2
 #define pinoMotor2Tras 17 // Pino de acionamento do motor 2
+#define ledBuiltIn 2
 
 // Definições para o display OLED
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -70,6 +71,7 @@ void setup(){
   pinMode(pinoMotor1Tras, OUTPUT);
   pinMode(pinoMotor2Frente, OUTPUT);
   pinMode(pinoMotor2Tras, OUTPUT);
+  pinMode(ledBuiltIn, OUTPUT);
 
   // Configurando os canais de PWM
   ledcSetup(motor1PWMChanFrente, freq, resolution);
@@ -89,6 +91,7 @@ void setup(){
   digitalWrite(pinoMotor1Tras, LOW);
   digitalWrite(pinoMotor2Frente, HIGH);
   digitalWrite(pinoMotor2Tras, LOW);
+  digitalWrite(ledBuiltIn, LOW);
   ledcWrite(motor1PWMChanFrente, 0);
   ledcWrite(motor1PWMChanTras, 0);
   ledcWrite(motor2PWMChanFrente, 0);
@@ -138,6 +141,13 @@ void loop(){
   }
   Serial.println(valSensorLinhaAnalog2);
   display.println(valSensorLinhaAnalog2);
+
+  if (valSensorLinhaDig1 == HIGH || valSensorLinhaDig2 == HIGH){
+    digitalWrite(ledBuiltIn, HIGH);
+  }
+  else{
+    digitalWrite(ledBuiltIn, LOW);
+  }
 
   // Output da leitura do sensor de distância
   Serial.print("Distância:\t");
